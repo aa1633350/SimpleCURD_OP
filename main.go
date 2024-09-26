@@ -1,54 +1,39 @@
 package main
 
-import "fmt"
-
-type Person struct {
-	ID      int    `json:"id"`
-	Name    string `json:"name"`
-	Mobile  string `json:"mobile number"`
-	Address string `json:"address"`
-	DOB     string `json:"DOB"`
-}
-
-var people = make(map[int]Person)
-var currentId = 1
-
-func CreatePerson(p Person) Person {
-	p.ID = currentId
-	people[currentId] = p
-	currentId++
-	return p
-}
-
-func GetPerson(id int) Person {
-	person, exists := people[id]
-	if !exists {
-		fmt.Printf("person with id %T does not exist", id)
-	}
-	return person
-}
-
-func UpdatePerson(id int, update Person) (Person, bool) {
-	if person, exists := people[id]; exists {
-		person.Name = update.Name
-		person.DOB = update.DOB
-		person.Mobile = update.Mobile
-		person.Address = update.Address
-		people[id] = person
-		return person, true
-	}
-	return Person{}, false
-}
-
-// DeletePerson deletes a person from the in-memory map.
-func DeletePerson(id int) bool {
-	if _, exists := people[id]; exists {
-		delete(people, id)
-		return true
-	}
-	return false
-}
+import (
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"net/http"
+)
 
 func main() {
+
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+	r.Post("/people", createPersonHandler)
+	r.Get("/people", getAllPeopleHandler)
+	r.Get("/people/{id}", getPersonHandler)
+	r.Put("/people/{id}", updatePersonHandler)
+	r.Delete("/people/{id}", deletePersonHandler)
+
+}
+
+func deletePersonHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func updatePersonHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func getPersonHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func getAllPeopleHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func createPersonHandler(w http.ResponseWriter, r *http.Request) {
 
 }
