@@ -1,6 +1,7 @@
 package main
 
 import (
+	"SimpleCURD_OP/goroutines"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"net/http"
@@ -15,7 +16,7 @@ func main() {
 	r.Get("/people/{id}", getPersonHandler)
 	r.Put("/people/{id}", updatePersonHandler)
 	r.Delete("/people/{id}", deletePersonHandler)
-
+	goroutines.DemoGoRoutine()
 }
 
 func deletePersonHandler(w http.ResponseWriter, r *http.Request) {

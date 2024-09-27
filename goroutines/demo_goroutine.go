@@ -74,7 +74,7 @@ func fetchWeatherData(city string, ch chan<- string, wg *sync.WaitGroup) interfa
 	return data
 }
 
-func main() {
+func DemoGoRoutine() {
 
 	startNow := time.Now()
 	cities := []string{"Delhi", "Banglore", "Mumbai", "Patna"}
@@ -95,4 +95,17 @@ func main() {
 		fmt.Println(result)
 	}
 	fmt.Println("This operation took : ", time.Since(startNow))
+
+	for i := 1; i <= 5; i++ {
+		wg.Add(1) //increment the wait group counter
+		go tryGoRoutine(i, &wg)
+	}
+	wg.Wait()
+	fmt.Println("All goroutines completed !! ")
+}
+
+// The order of execution in goroutines is non-deterministic
+func tryGoRoutine(i int, wg *sync.WaitGroup) {
+	defer wg.Done() // mark the goroutine as done
+	fmt.Printf("Message from %d goroutine\n", i)
 }
