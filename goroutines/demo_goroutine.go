@@ -109,3 +109,24 @@ func tryGoRoutine(i int, wg *sync.WaitGroup) {
 	defer wg.Done() // mark the goroutine as done
 	fmt.Printf("Message from %d goroutine\n", i)
 }
+
+func EvilNinjaGoRoutine() {
+	start := time.Now()
+	var wg sync.WaitGroup
+	evilNinjas := []string{"Red Women", "Cersei", "Margery", "Joffery"}
+
+	for _, evilNinja := range evilNinjas {
+		wg.Add(1)
+		go attack(evilNinja, &wg)
+	}
+
+	wg.Wait()
+	fmt.Println("Time taken in attack ", time.Since(start))
+
+}
+
+func attack(target string, wg *sync.WaitGroup) {
+	fmt.Println("Throwing ninja star at evil", target)
+	wg.Done()
+	//time.Sleep(time.Second)
+}
