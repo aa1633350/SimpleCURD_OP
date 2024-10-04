@@ -17,7 +17,8 @@ func main() {
 	r.Put("/people/{id}", updatePersonHandler)
 	r.Delete("/people/{id}", deletePersonHandler)
 	//goroutines.DemoGoRoutine()
-	goroutines.EvilNinjaGoRoutine()
+	//goroutines.EvilNinjaGoRoutine()
+	goroutines.Multiplex()
 }
 
 func deletePersonHandler(w http.ResponseWriter, r *http.Request) {
